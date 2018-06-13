@@ -3,6 +3,9 @@ package com.example.brebner.spaceinvaders;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.Log;
 
@@ -29,6 +32,10 @@ public class PlayerShip {
 
     private int shipMoving = STOPPED;
 
+    private int screenY;
+
+    private Paint paint;
+
     public PlayerShip(Context context, int screenX, int screenY) {
         rectF = new RectF();
         length = screenX / 10;
@@ -36,6 +43,7 @@ public class PlayerShip {
 
         x = screenX / 2;
         y = screenY - 20;
+        this.screenY = screenY;
 
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.playership);
         bitmap = Bitmap.createScaledBitmap(bitmap,
@@ -43,6 +51,7 @@ public class PlayerShip {
                 (int) height,
                 false);
         shipSpeed = SHIPSPEED;
+        paint = new Paint();
     }
 
     public RectF getRectF() {
@@ -90,5 +99,9 @@ public class PlayerShip {
         rectF.bottom = y + height;
         rectF.left = x;
         rectF.right = x + length;
+    }
+
+    public void draw(Canvas canvas)  {
+        canvas.drawBitmap(bitmap, x, (9 * screenY) / 10, paint);
     }
 }
